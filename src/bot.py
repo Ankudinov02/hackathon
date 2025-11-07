@@ -1,24 +1,21 @@
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
-from aiogram.types import (KeyboardButton, Message, ReplyKeyboardMarkup,
-                           WebAppInfo)
+from aiogram.types import (KeyboardButton, Message, ReplyKeyboardMarkup, InlineKeyboardMarkup,
+                           WebAppInfo, InlineKeyboardButton)
 
 dp = Dispatcher()
+WEBAPP_URL = "https://pinecv.onrender.com/"
 
 
-@dp.message(Command("start"))
-async def command_start_handler(message: Message) -> None:
-    web_app_info = WebAppInfo(url="https://pinecv.onrender.com/")
-    button_text = "Launch"
-    web_app_button = KeyboardButton(text=button_text, web_app=web_app_info)
-
-    keyboard = ReplyKeyboardMarkup(
-        keyboard=[[web_app_button]], resize_keyboard=True
+@dp.message_handler(commands=["start"])
+async def start(message: types.Message):
+    keyboard = InlineKeyboardMarkup().add(
+        InlineKeyboardButton(
+            text="Open the app",
+            web_app=WebAppInfo(url=WEBAPP_URL)
+        )
     )
-    await message.answer(
-        "Click the button to open the PineCV application.",
-        reply_markup=keyboard,
-    )
+    await message.answer("Press the button to open the app", reply_markup=keyboard)
 
 
 async def run(token: str) -> None:
