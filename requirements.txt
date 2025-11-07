@@ -1,0 +1,10 @@
+# Misc
+python-dotenv==1.2.1
+
+# Telegram API's 
+aiogram==3.22.0
+
+# Testing / Static Checking / Formatting / Imports
+mypy==1.18.2
+black==25.9.0
+isort==7.0.0
